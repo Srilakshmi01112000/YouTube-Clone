@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>YouTube Clone - Home</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <div class="search-container">
+        <input type="text" id="search-input" placeholder="Search Video">
+        <button id="search">Search</button>
+    </div>
+    <div id="container">
+        <!-- The fetched videos will be displayed here -->
+    </div>
+
+    <script>
+        const apiKey = "AIzaSyDIhWr-fCOptDRRko9B86ReaTR88ii5SI4";
+        const baseUrl = "https://www.googleapis.com/youtube/v3";
+        let container = document.getElementById("container");
+
+        document.addEventListener("DOMContentLoaded", async () => {
+            // Fetch random videos as default
+            const videos = await getRandomVideos();
+            renderVideos(videos);
+        });
+
+        async function getRandomVideos() {
+            // Make an API call to get random videos
+            let url = `${baseUrl}/search?key=${apiKey}&part=snippet&maxResults=20`;
+            const response = await fetch(url, { method: "GET" });
+            const result = await response.json();
+            return result.items;
+        }
+
+        async function getSearchResults(searchString) {
+            // make a call to the search API and return the results from here.
+            // data need to be sent: apiKey , searchString
+            let url = `${baseUrl}/search?key=${apiKey}&q=${searchString}&part=snippet&maxResults=20`
+            const response = await fetch(url, { method: "GET" });
+            const result = await response.json();
+            return result.items;
+        }
+
+        function renderVideos(videosList) {
+            container.innerHTML = '';
+            videosList.forEach((video) => {
+                const { snippet } = video;
+
+                const videoElement = document.createElement("div");
+                videoElement.className = "video";
+                videoElement.innerHTML = `
+                    <img src="${snippet.thumbnails.high.url}" alt="${snippet.title}">
+                    <p>${snippet.title}</p>
+                    <b>${snippet.channelTitle}</b>
+                `;
+
+                videoElement.addEventListener('click', () => {
+                    localStorage.setItem('video_id', video.id.videoId);
+                    window.location.href = 'vedioDetails.html';
+                });
+
+                container.appendChild(videoElement);
+            });
+        }
+    </script>
+    <script src="./script.js"></script>
+</body>
+
+</html>
+
+<!-- <!DOCTYPE html>
+<html>
+
+<head>
+    <title>YouTube Clone - Home</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet" href="./style.css">
+
+</head>
+
+<body>
+    <div class="search-container">
+        <input type="text" id="search-input" placeholder="Search Video">
+        <button id="search">search</button>
+    </div>
+    <div id="container">
+    </div>
+    <script>
+        const apiKey = "AIzaSyDIhWr-fCOptDRRko9B86ReaTR88ii5SI4";
+        const baseUrl = `https://www.googleapis.com/youtube/v3`;
+        
+        const container = document.getElementById("container");
+
+        document.addEventListener("DOMContentLoaded", async () => {
+            // Fetch initial videos for an empty search query
+            const videos = await getSearchResults("");
+            renderVideos(videos);
+        });
+        async function getRandomVideos() {
+            // Make an API call to get random videos
+            let url = `${baseUrl}/search?key=${apiKey}&part=snippet&maxResults=20`;
+            const response = await fetch(url, { method: "GET" });
+            const result = await response.json();
+            return result.items;
+        }
+
+    </script>
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script src="./script.js"></script>
+</body>
+
+</html> -->
