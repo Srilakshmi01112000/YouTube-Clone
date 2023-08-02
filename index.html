@@ -13,18 +13,56 @@
 </head>
 
 <body>
-    <div class="search-container">
-        <div class="youtube-logo">
-            <img src="youtube-logo-youtube-icon-transparent-free-png.webp" alt="YouTube Logo">
+    <nav class="navbar">
+        <div class="toggle-btn">
+            <span></span>
+            <span></span>
+            <span></span>
         </div>
-        <span class="page-name">YouTube</span>
-        <input type="text" id="search-input" placeholder="Search Video">
-        <button id="search">Search</button>
+        <button class="btn"> <img src="images/Youtube-Logo.png" class="logo" alt=""></button>
+        <div class="search-container">
+            <input type="text" id="search-input" placeholder="Search Video">
+            <button id="search"><img src="images/search.png" alt=""></button>
+
+        </div>
+        <div class="user-options">
+            <img src="images/create.png" class="icon" id="creat" alt="">
+            <img src="images/arrowBottom.png" class="icon" alt="">
+            <img src="images/notifications.png" class="icon" alt="">
+            <div class="user-dp">
+                <img src="images/User-Avatar.png" alt="">
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="side-bar">
+        <a href="#" class="links active"><img src="./images/home.png" alt="">home</a>
+        <a href="#" class="links"><img src="./images/explore.png" alt="">explore</a>
+        <a href="#" class="links"><img src="images/subscriptions.png" alt="">subscription</a>
+        <hr class="seperator">
+        <a href="#" class="links"><img src="images/library.png" alt="">library</a>
+        <a href="#" class="links"><img src="images/history.png" alt="">history</a>
+        <a href="#" class="links"><img src="images/yourVideos.png" alt="">your video</a>
+        <a href="#" class="links"><img src="images/watchLater.png" alt="">watch later</a>
+        <a href="#" class="links"><img src="images/liked.png" alt="">like video</a>
+        <a href="#" class="links"><img src="images/arrowBottom.png" alt="">show more</a>
+    </div>
+    <div class="filters">
+        <button class="filter-options active">all</button>
+        <button class="filter-options">CSS</button>
+        <button class="filter-options">web development</button>
+        <button class="filter-options">python</button>
+        <button class="filter-options">Entertainment</button>
+        <button class="filter-options">marvel</button>
+        <button class="filter-options">javascript</button>
+        <button class="filter-options">artificial intelligence</button>
+        <button class="filter-options">machine learning</button>
+        <button class="filter-options">trending</button>
     </div>
     <div id="container">
         <!-- The fetched videos will be displayed here -->
     </div>
-
     <script>
         const apiKey = "AIzaSyDIhWr-fCOptDRRko9B86ReaTR88ii5SI4";
         const baseUrl = "https://www.googleapis.com/youtube/v3";
@@ -76,6 +114,7 @@
             });
         }
     </script>
+    <script src="https://apis.google.com/js/api.js"></script>
     <script src="./script.js"></script>
 </body>
 
