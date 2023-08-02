@@ -1,14 +1,16 @@
-//apiKey = "AIzaSyDIhWr-fCOptDRRko9B86ReaTR88ii5SI4";
-//baseUrl = `https://www.googleapis.com/youtube/v3`;
+
 /**
  * 
  * searchString is the value typed by the user in the input box.
  * @param {String} searchString 
  */
-
-const searchButton = document.getElementById("search") ;
+document.addEventListener("DOMContentLoaded", async () => {
+    const videos = await getRandomVideos();
+    renderVideos(videos);
+});
+const searchButton = document.getElementById("search");
 const searchInput = document.getElementById("search-input");
- //container = document.getElementById("container");
+//container = document.getElementById("container");
 
 searchButton.addEventListener("click", async () => {
     let searchString = searchInput.value.trim();
@@ -26,20 +28,33 @@ async function getSearchResults(searchString) {
     let url = `${baseUrl}/search?key=${apiKey}&q=${searchString}&part=snippet&maxResults=20`;
     const response = await fetch(url, { method: "GET" });
     const result = await response.json();
-    //console.log(result)
-    //addDataOntoUI(result.items);
-    // console.log("Search Query:", searchString);
-    // console.log("Search Results:", result.items);
     return result.items;
 }
+// async function getSearchResults(searchString) {
+//     let url = `${baseUrl}/search?key=${apiKey}&q=${searchString}&part=snippet&maxResults=20`;
+//     try {
+//         const response = await fetch(url);
+//         if (!response.ok) {
+//             throw new Error('Failed to fetch search results');
+//         }
+//         const result = await response.json();
+//         return result.items;
+//     } catch (error) {
+//         console.error('Error fetching search results:', error);
+//         return [];
+//     }
+// }
 
 function renderVideos(videosList) {
-    container.innerHTML = ""; // Clear previous search results
-   videosList.forEach((video) => {
-        const {snippet} = video ;
-        // const snippet = video.snippet
+    container.innerHTML = ''; // Clear previous search results
+    if (!videosList || videosList.length === 0) {
+        container.innerHTML = '<p>No videos found.</p>';
+        return;
+    }
+    videosList.forEach((video) => {
+        const { snippet } = video;
 
-        const videoElement = document.createElement("div");
+        const videoElement = document.createElement('div');
         videoElement.className = "video";
         videoElement.innerHTML = `
                     <img src="${snippet.thumbnails.high.url}" alt="${video.snippet.title}">
@@ -51,23 +66,22 @@ function renderVideos(videosList) {
             localStorage.setItem('video_id', video.id.videoId);
             window.location.href = 'vedioDetails.html';
         });
-       // videosList.appendChild( videoElement)
         container.appendChild(videoElement);
-   });
+    });
 }
-let firstScript = document.getElementsByTagName("script")[0] ;
+let firstScript = document.getElementsByTagName("script")[0];
 firstScript.addEventListener("load", onLoadScript)
 function onLoadScript() {
- 	if (YT) {
-    new YT.Player("aravind", {
- 	height: "500",
- 		width: "850",
- 		videoId,
- 		events: {
- 			onReady: (event) => {
- 				        document.title = event.target.videoTitle ;
- 		       	   }
- 	      }
- 	   });
- 	}
+    if (YT) {
+        new YT.Player("aravind", {
+            height: "500",
+            width: "850",
+            videoId,
+            events: {
+                onReady: (event) => {
+                    document.title = event.target.videoTitle;
+                }
+            }
+        });
+    }
 }

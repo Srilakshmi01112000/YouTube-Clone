@@ -1,20 +1,57 @@
 *{
     margin: 0;
     padding: 0;
-    font-family: 'Open Sans', sans-serif;
-    font-family: 'Poppins', sans-serif;
+    /* font-family: 'Open Sans', sans-serif;
+    font-family: 'Poppins', sans-serif; */
+    /* margin-top: 10px; */
+    box-sizing: border-box;
 }
 body {
+    margin-left: 50px;
     background-color: black;
+    font-family: 'Inter', sans-serif;
+    margin-right: 50px;
 }
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
 .search-container {
     display: flex;
+    /* flex-direction: column; */
     width: 70vw ;
-    gap: 20px;
+    gap: 10px;
     padding: 20px;
     justify-content: center;
     margin: auto;
+    margin-bottom: 10px;
+    align-items: center;
 }
+#search-input {
+    flex-grow: 1;
+    padding: 10px;
+    /* border: 1px solid #ccc; */
+    border-radius: 4px;
+}
+#search {
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+#search:hover {
+    background-color: #0056b3;
+}
+#container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
 .search-container > input {
     flex-grow: 1;
 }
@@ -42,10 +79,60 @@ body {
 .video{
     padding: 10px;
     color: white ;
+   /* // background-color: white; */
+    /* border: 1px solid #ddd; */
+    border-radius: 4px;
+    cursor: pointer;
+    transition: transform 0.2s;
 }
 .video > img {
     width: 100%;
+    border-radius: 4px;
+}
+.video:hover {
+    transform: translateY(-5px);
 }
 .video > b {
     color: #AAA ;
+}
+.video p {
+    font-size: 16px;
+    margin: 10px 0;
+}
+
+
+.logo {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.logo h1 {
+    font-size: 24px;
+    margin-left: 10px;
+}
+
+/* Style for main content area */
+.main-content {
+    margin-left: 250px;
+    padding: 20px;
+}
+.youtube-logo img {
+    width: 70px; /* Adjust the width as needed */
+    height: auto;
+   
+}
+.page-name{
+    color: white;
+    font-size: 30px;
+  
+    margin-left: 0;
+    margin-right: 15px;
+}
+.main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
 }
