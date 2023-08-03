@@ -61,7 +61,7 @@
         <button class="filter-options">trending</button>
     </div>
     <div id="container">
-        <!-- The fetched videos will be displayed here -->
+
     </div>
     <script>
         const apiKey = "AIzaSyDIhWr-fCOptDRRko9B86ReaTR88ii5SI4";
@@ -69,14 +69,11 @@
         let container = document.getElementById("container");
 
         document.addEventListener("DOMContentLoaded", async () => {
-            // Fetch random videos as default
-            // const videos = await getRandomVideos();
             const videos = await getSearchResults("");
             renderVideos(videos);
         });
 
         async function getRandomVideos() {
-            // Make an API call to get random videos
             let url = `${baseUrl}/search?key=${apiKey}&part=snippet&maxResults=20`;
             const response = await fetch(url, { method: "GET" });
             const result = await response.json();
@@ -84,8 +81,6 @@
         }
 
         async function getSearchResults(searchString) {
-            // make a call to the search API and return the results from here.
-            // data need to be sent: apiKey , searchString
             let url = `${baseUrl}/search?key=${apiKey}&q=${searchString}&part=snippet&maxResults=20`
             const response = await fetch(url, { method: "GET" });
             const result = await response.json();

@@ -41,31 +41,20 @@ function renderVideoPlayer(videoId) {
         <div class="video-container">
             <iframe src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>
             <div class="video-controls">
-                <button class="control-button"><span class="material-icons">thumb_up</span></button>
-                <button class="control-button"><span class="material-icons">thumb_down</span></button>
+               
                 <!-- Add more control buttons here -->
             </div>
         </div>
     `;
 }
 
-// function renderVideoStatistics(videoDetails, statistics) {
-//     videoStats.innerHTML = `
-//     <h2>${videoDetails.snippet.title}</h2>
-//     <p>Views: ${statistics.viewCount}</p>
-//     <p>Likes: ${statistics.likeCount}</p>
-//     <p>Dislikes: ${statistics.dislikeCount}</p>
-//     <p>Channel: ${videoDetails.snippet.channelTitle}</p>
-// `;
-// }
+
 function renderVideoStatistics(videoDetails, statistics) {
     videoStats.innerHTML = `
         <div class="statistics">
             <div class="left">
                 <h2>${videoDetails.snippet.title}</h2>
                 <p>Views: ${statistics.viewCount}</p>
-                <p>Likes: ${statistics.likeCount}</p>
-                <p>Dislikes: ${statistics.dislikeCount}</p>
                 <div class="channel-container">
                     <div class="left">
                         <img src="${videoDetails.snippet.thumbnails.default.url}" alt="Channel Logo">
@@ -75,7 +64,7 @@ function renderVideoStatistics(videoDetails, statistics) {
                         </div>
                     </div>
                     <div class="right">
-                        <button>Subscribe</button>
+                        <button class="sub">Subscribe</button>
                     </div>
                 </div>
             </div>
@@ -97,38 +86,59 @@ async function fetchVideoComments(videoId) {
 }
 
 function renderVideoComments(videoComments) {
+    const commentsDiv = document.getElementById('comments');
     commentsDiv.innerHTML = '<h2>Comments</h2>';
 
     videoComments.forEach(comment => {
         const commentItem = document.createElement('div');
         commentItem.className = 'comment-item';
         commentItem.innerHTML = `
-        <p><strong>${comment.snippet.topLevelComment.snippet.authorDisplayName}</strong></p>
-        <p>${comment.snippet.topLevelComment.snippet.textOriginal}</p>
-        <button class="show-replies">Show Replies</button>
-        <div class="replies"></div>
-    `;
-        // Add a click event listener to load and render reply comments
+            <div class="comment-header">
+                <p><strong>${comment.snippet.topLevelComment.snippet.authorDisplayName}</strong></p>
+                <p>${comment.snippet.topLevelComment.snippet.textOriginal}</p>
+            </div>
+            <button class="show-replies">Show Replies</button>
+            <div class="replies">
+                <!-- Reply comments will be rendered here -->
+            </div>
+        `;
+
         const showRepliesButton = commentItem.querySelector('.show-replies');
+        const repliesDiv = commentItem.querySelector('.replies');
+
         showRepliesButton.addEventListener('click', async () => {
-            // commentItem.classList.toggle('show-replies-clicked');
-            const repliesDiv = commentItem.querySelector('.replies');
-            const replyComments = await fetchVideoComments(comment.snippet.topLevelComment.id);
-            repliesDiv.innerHTML = '';
-            replyComments.forEach(reply => {
-                const replyItem = document.createElement('div');
-                replyItem.className = 'reply-item';
-                replyItem.innerHTML = `
-                <p><strong>${reply.snippet.authorDisplayName}</strong></p>
-                <p>${reply.snippet.textOriginal}</p>
-            `;
-                repliesDiv.appendChild(replyItem);
-            });
+            if (repliesDiv.style.display === 'none') {
+                const replyComments = await fetchVideoComments(comment.snippet.topLevelComment.id);
+                repliesDiv.innerHTML = '';
+                replyComments.forEach(reply => {
+                    const replyItem = document.createElement('div');
+                    replyItem.className = 'reply-item';
+                    replyItem.innerHTML = `
+                        <p><strong>${reply.snippet.authorDisplayName}</strong></p>
+                        <p>${reply.snippet.textOriginal}</p>
+                    `;
+                    repliesDiv.appendChild(replyItem);
+                });
+                repliesDiv.style.display = 'block';
+            } else {
+                repliesDiv.style.display = 'none';
+            }
         });
         commentsDiv.appendChild(commentItem);
     });
 }
 
+function renderReplyComments(replyComments, repliesDiv) {
+    replyComments.forEach(reply => {
+        const replyItem = document.createElement('div');
+        replyItem.className = 'reply-item';
+        replyItem.innerHTML = `
+            <p><strong>${reply.snippet.authorDisplayName}</strong></p>
+            <p>${reply.snippet.textOriginal}</p>
+        `;
+        repliesDiv.appendChild(replyItem);
+    });
+}
 
 
 
