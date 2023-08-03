@@ -10,7 +10,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 const searchButton = document.getElementById("search");
 const searchInput = document.getElementById("search-input");
-//container = document.getElementById("container");
 
 searchButton.addEventListener("click", async () => {
     let searchString = searchInput.value.trim();
@@ -23,30 +22,15 @@ searchButton.addEventListener("click", async () => {
 
 
 async function getSearchResults(searchString) {
-    // make a call to the search API and return the results from here.
-    // data need to be sent: apiKey , searchString
     let url = `${baseUrl}/search?key=${apiKey}&q=${searchString}&part=snippet&maxResults=20`;
     const response = await fetch(url, { method: "GET" });
     const result = await response.json();
     return result.items;
 }
-// async function getSearchResults(searchString) {
-//     let url = `${baseUrl}/search?key=${apiKey}&q=${searchString}&part=snippet&maxResults=20`;
-//     try {
-//         const response = await fetch(url);
-//         if (!response.ok) {
-//             throw new Error('Failed to fetch search results');
-//         }
-//         const result = await response.json();
-//         return result.items;
-//     } catch (error) {
-//         console.error('Error fetching search results:', error);
-//         return [];
-//     }
-// }
+
 
 function renderVideos(videosList) {
-    container.innerHTML = ''; // Clear previous search results
+    container.innerHTML = ''; 
     if (!videosList || videosList.length === 0) {
         container.innerHTML = '<p>No videos found.</p>';
         return;
